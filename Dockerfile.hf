@@ -1,0 +1,39 @@
+# Usar uma imagem base leve de Python
+FROM python:3.11-slim
+
+# Evitar a geração de arquivos .pyc e habilitar o log em tempo real
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Criar um usuário não-root para o Hugging Face Spaces
+RUN useradd -m -u 1000 user
+USER user
+ENV HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH
+
+WORKDIR $HOME/app
+
+# Instalar dependências do sistema como root
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    texlive-latex-base \
+    texlive-fonts-recommended \
+    texlive-latex-extra \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Voltar para o usuário não-root
+USER user
+
+# Instalar dependências Python
+COPY --chown=user requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Copiar o código da aplicação
+COPY --chown=user main.py .
+
+# O Hugging Face Spaces usa a porta 7860 por padrão
+EXPOSE 7860
+
+# Comando para rodar a aplicação na porta correta
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
