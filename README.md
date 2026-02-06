@@ -5,7 +5,7 @@ colorFrom: blue
 colorTo: purple
 sdk: docker
 sdk_version: "latest"
-python_version: "3.x"
+python_version: "3.11"
 app_file: main.py
 pinned: false
 ---
