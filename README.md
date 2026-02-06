@@ -11,7 +11,7 @@ Esta é uma API simples construída com FastAPI que recebe conteúdo LaTeX via P
    ```
 3. Inicie o container:
    ```bash
-   docker run -p 8000:8000 latex-api
+   docker run -p 8000:7860 latex-api
    ```
 
 ## Como usar a API
