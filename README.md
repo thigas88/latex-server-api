@@ -1,3 +1,15 @@
+---
+title: "LaTeX to PDF API"
+emoji: 😜
+colorFrom: blue
+colorTo: purple
+sdk: docker
+sdk_version: "latest"
+python_version: "3.11"
+app_file: main.py
+pinned: false
+---
+
 # LaTeX to PDF API (FastAPI + Docker)
 
 Esta é uma API simples construída com FastAPI que recebe conteúdo LaTeX via POST e retorna um arquivo PDF compilado.
